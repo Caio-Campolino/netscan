@@ -29,13 +29,13 @@ Requer Python 3.10+. Recomendado uso em Linux ou WSL (Windows).
 ```
 2. Execution examples:
 ```text
- Scan básico
+ Basic Scan
 ./netscan 192.168.0.1
 
- Modo verboso
+ Verbose Mode
 ./netscan 192.168.0.1 -v
 
- Ajuda
+ Help
 ./netscan -h
 ```
 ---
