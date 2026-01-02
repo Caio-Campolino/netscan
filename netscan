@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+
+import argparse
+from netscan_pkg.banner import show_banner
+from netscan_pkg.core.host_discovery import discover_hosts
+from netscan_pkg.core.port_scanner import scan_ports
+from netscan_pkg.core.service_enum import grab_banner
+from netscan_pkg.utils.logger import info, set_verbose
+from netscan_pkg.utils.validator import validate_target
+
+COMMON_PORTS = [21, 22, 23, 25, 53, 80, 443, 445, 3389]
+
+# Mapeamento simples de serviços (nmap-like)
+SERVICE_MAP = {
+    21: "ftp",
+    22: "ssh",
+    23: "telnet",
+    25: "smtp",
+    53: "dns",
+    80: "http",
+    443: "https",
+    445: "smb",
+    3389: "rdp"
+}
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Behelit Network Scanner"
+    )
+
+    parser.add_argument(
+        "target",
+        help="Target IP or network (e.g. 192.168.1.10 or 192.168.1.0/24)"
+    )
+
+    parser.add_argument(
+        "-t", "--threads",
+        type=int,
+        default=50,
+        help="Number of threads (default: 50)"
+    )
+
+    parser.add_argument(
+        "--timeout",
+        type=float,
+        default=1,
+        help="Timeout in seconds (default: 1)"
+    )
+
+    parser.add_argument(
+        "--Pn",
+        action="store_true",
+        help="Skip ICMP discovery"
+    )
+
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Verbose output"
+    )
+
+    return parser.parse_args()
+
+
+def print_table_header():
+    print("PORT     STATE SERVICE")
+    print("----     ----- -------")
+
+
+def main():
+    args = parse_args()
+
+    if args.verbose:
+        set_verbose(True)
+
+    if not validate_target(args.target):
+        print("[-] Invalid target.")
+        return
+
+    show_banner()
+    info(f"Discovering hosts in {args.target}")
+
+    hosts = discover_hosts(
+        args.target,
+        threads=args.threads,
+        timeout=args.timeout,
+        skip_icmp=args.Pn
+    )
+
+    if not hosts:
+        print("[-] No alive hosts found.")
+        return
+
+    for host in hosts:
+        print(f"\nNmap scan report for {host}")
+        info(f"Scanning ports on {host}")
+
+        open_ports = scan_ports(
+            host,
+            COMMON_PORTS,
+            threads=args.threads,
+            timeout=args.timeout
+        )
+
+        if not open_ports:
+            print("No open ports found.")
+            continue
+
+        print_table_header()
+
+        for port in open_ports:
+            service = SERVICE_MAP.get(port, "unknown")
+            print(f"{port}/tcp  open  {service}")
+
+            banner = grab_banner(
+                host,
+                port,
+                timeout=args.timeout
+            )
+
+            if banner and args.verbose:
+                print(f"|_ banner: {banner}")
+
+    info("Scan completed.")
+
+
+if __name__ == "__main__":
+    main()
