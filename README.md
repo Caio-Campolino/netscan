@@ -23,7 +23,7 @@ Requer Python 3.10+. Recomendado uso em Linux ou WSL (Windows).
 1. Quick setup:
 ```text
    git clone https://github.com/Caio-Campolino/netscan
-   cd scanner_rede
+   cd netscan
    pip install -r requirements.txt
    chmod +x netscan
 ```
