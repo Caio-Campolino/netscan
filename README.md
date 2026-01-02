@@ -1,8 +1,9 @@
 # NetScan
 
-Ferramenta CLI de varredura de rede desenvolvida em Python, inspirada na saída do Nmap. O foco do projeto é o estudo de sockets, organização de código e extensibilidade para ambientes controlados.
+NetScan is a command-line network scanning tool developed in Python, inspired by the Nmap output format.
+The project is focused on studying socket programming, clean code organization, and extensibility for use in controlled environments.
 
-## Estrutura do Projeto
+## Project Structure
 
 ```text
 scanner_rede/
@@ -16,17 +17,17 @@ scanner_rede/
 ```
 ---
 
-## Instalação e Uso
+## Installation and Usage
 Requer Python 3.10+. Recomendado uso em Linux ou WSL (Windows).
 
-1. Configuração rápida:
+1. Quick setup:
 ```text
    git clone https://github.com/Caio-Campolino/scanner_rede.git
    cd scanner_rede
    pip install -r requirements.txt
    chmod +x netscan
 ```
-2. Exemplos de execução:
+2. Execution examples:
 ```text
  Scan básico
 ./netscan 192.168.0.1
@@ -38,5 +39,6 @@ Requer Python 3.10+. Recomendado uso em Linux ou WSL (Windows).
 ./netscan -h
 ```
 ---
-## Aviso Legal
-Ferramenta desenvolvida estritamente para fins educacionais. O autor não se responsabiliza pelo uso indevido ou scans em redes sem autorização explícita.
+## Legal Disclaimer
+This tool was developed strictly for educational purposes.
+The author assumes no responsibility for misuse or for executing scans against networks without explicit authorization.
