@@ -18,7 +18,6 @@ scanner_rede/
 ---
 
 ## Installation and Usage
-Requer Python 3.10+. Recomendado uso em Linux ou WSL (Windows).
 
 1. Quick setup:
 ```text
