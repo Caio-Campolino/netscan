@@ -7,13 +7,13 @@ The project is focused on studying socket programming, clean code organization, 
 
 ```text
 scanner_rede/
-├── netscan                 # Entry point (Executável)
-├── requirements.txt        # Dependências
+├── netscan                 # Entry point (Executable)
+├── requirements.txt        # Dependencies
 ├── README.md
-└── netscan_pkg/            # Pacote principal
+└── netscan_pkg/            # Main package
     ├── banner.py
-    ├── core/               # Lógica de discovery
-    └── utils/              # Loggers e helpers
+    ├── core/               # Discovery logic
+    └── utils/              # Loggers and helpers
 ```
 ---
 
